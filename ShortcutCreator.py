@@ -4,19 +4,19 @@
 
 import os
 import pandas as pd   
-import winshell
+import win32com.client
 
 # Replace this with the path to your Excel file
-excel_file = r"C:\Users\QU46838\OneDrive - Chemours\Desktop\test\ICD List.xlsx"
+excel_file = r"Z:\Co-ops\Coop05\Nate Ziegler\Folder Generation\Process Measurement Devices Loop and Documentum Links.xlsx"
 
 # Path to the directory where shortcuts will be created
-output_directory = r"C:\Users\QU46838\OneDrive - Chemours\Desktop\test"
+output_directory = r"Z:\Co-ops\Coop05\Nate Ziegler\Folder Generation\ICDs_Loops_etc\Loops"
 
 # Replace these with the column names
-file_path_column = "Link"
-shortcut_name_column = "ICDS"
+sheet_name = "Loop Sheets"
+file_path_column = "Completed Link"
+shortcut_name_column = "Folder Name"                        #Names cannot contain "/" at this time
 is_url_column = "Is URL"
-
 
 # Function to create shortcuts
 def create_shortcut(source_path, target_folder, shortcut_name, is_url=False):
@@ -36,8 +36,8 @@ def create_shortcut(source_path, target_folder, shortcut_name, is_url=False):
             s.workdir = os.path.dirname(source_path)
             s.save(shortcut_path)
 
-# Read the Excel file into a DataFrame
-df = pd.read_excel(excel_file)
+# Read the specific Excel tab (worksheet) into a DataFrame
+df = pd.read_excel(excel_file, sheet_name)
 
 # Check if the specified columns exist
 if file_path_column in df.columns and shortcut_name_column in df.columns:
